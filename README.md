@@ -59,5 +59,11 @@ To be Added
     * Added code to server.js for port replication
 
 **0.1 - Structure Setup**
+    * Setuup conecctions and schema models
+    * Created functions for viewing roles
+    * Added Seed Data
+    * Tested initial functionality - PASSED
+
+**0.2 - Add Functionality**
 
 

@@ -1,13 +1,58 @@
 const express = require('express');
-const sequelize = require('./config/connection');
+const DB = require('./config/connection');
+const { prompt } = require('inquirer');
+const { printTable } = require('console-table-printer');
 
-const app = express();
-const PORT = process.env.PORT || 3001;
+const mainMenu = () => {
+  prompt({
+    type: 'list',
+    name: 'direction',
+    message: 'What would you like?',
+    choices: ['view depts', 'view roles', 'view employees', 'view company'],
+  }).then(answer => {
+    if (answer.direction === 'view depts') {
+      viewDepts();
+    } else if (answer.direction === 'view roles') {
+      viewRoles();
+    } else if (answer.direction === 'view employees') {
+      viewEmploy();
+    } else if (answer.direction === 'view company') {
+      viewComp();
+    }
+  })
+};
+const viewDepts = () => {
+  DB.promise().query('SELECT * FROM department').then(([results]) => {
+    printTable(results)
+    mainMenu();
+  });
+};
+const viewRoles = () => {
+  DB.promise().query('SELECT * FROM role').then(([results]) => {
+    printTable(results)
+    mainMenu();
+  });
+};
+const viewEmploy = () => {
+  DB.promise().query('SELECT * FROM employee').then(([results]) => {
+    printTable(results)
+    mainMenu();
+  });
+};
+const viewComp = () => {
+  DB.promise().query('SELECT * FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id').then(([results]) => {
+    printTable(results)
+    mainMenu();
+  });
+};
+const addEmploy = () => {
+  DB.promise().query().then(([results]) => {
+    printTable(results)
+    mainMenu();
+  });
+};
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 
-sequelize.sync().then(() => {
-  app.listen(PORT, () => console.log('Now listening on port: ' + PORT));
-});
+
+mainMenu();

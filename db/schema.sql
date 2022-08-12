@@ -1,2 +1,24 @@
 DROP DATABASE IF EXISTS business_db;
 CREATE DATABASE business_db;
+
+USE business_db;
+CREATE TABLE department( 
+    id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(255) NOT NULL
+);
+CREATE TABLE role(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    salary DECIMAL(10,2) NOT NULL,
+    department_id INTEGER,
+    FOREIGN KEY (department_id) REFERENCES department (id) ON DELETE CASCADE
+);
+CREATE TABLE employee(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    role_id INT,
+    FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE,
+    manager_id INTEGER,
+    FOREIGN KEY (manager_id) REFERENCES employee (id) ON DELETE SET NULL
+);

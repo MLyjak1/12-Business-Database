@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "mysql2": "^2.2.5",
+    "console-table-printer": "^2.11.0",
     "dotenv": "^16.0.1",
+    "express": "^4.17.1",
+    "inquirer": "^8.2.4",
+    "mysql2": "^2.2.5",
     "nodemon": "^2.0.19",
     "sequelize": "^6.3.5"
   }
