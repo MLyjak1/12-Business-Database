@@ -8,7 +8,7 @@ const mainMenu = () => {
     type: 'list',
     name: 'direction',
     message: 'What would you like?',
-    choices: ['view depts', 'view roles', 'view employees', 'view company'],
+    choices: ['view depts', 'view roles', 'view employees', 'view company', 'add department'],
   }).then(answer => {
     if (answer.direction === 'view depts') {
       viewDepts();
@@ -18,6 +18,8 @@ const mainMenu = () => {
       viewEmploy();
     } else if (answer.direction === 'view company') {
       viewComp();
+    } else if (answer.direction === 'add department') {
+      addDept();
     }
   })
 };
@@ -45,12 +47,32 @@ const viewComp = () => {
     mainMenu();
   });
 };
-const addEmploy = () => {
-  DB.promise().query().then(([results]) => {
-    printTable(results)
-    mainMenu();
+
+const addDept = () => {
+  prompt({
+    type: 'input',
+    name: 'depts',
+    message: 'What department would you Like to add?',
+  }).then(answer => {
+    console.log(answer.depts);
+    DB.promise().query('INSERT INTO department (name) VALUES (?)', answer.depts)
+      mainMenu();  
   });
 };
+
+// const addDept = () => {
+//   prompt({
+//     type: 'input',
+//     name: 'depts',
+//     message: 'What department would you Like to add?',
+//   }).then(answer => {
+//     console.log(answer.depts);
+//     DB.promise().query('INSERT INTO department (name) VALUES (?)', answer.depts)
+//       mainMenu();  
+//   });
+// };
+
+
 
 
 
